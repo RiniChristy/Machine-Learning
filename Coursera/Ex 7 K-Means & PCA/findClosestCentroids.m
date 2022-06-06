@@ -19,20 +19,26 @@ idx = zeros(size(X,1), 1);
 %               range 1..K
 %
 % Note: You can use a for-loop over the examples to compute this.
-%
+
+
+% Create a "distance" matrix of size (m x K) and initialize it to all zeros. 
+% 'm' is the number of training examples, K is the number of centroids.
+% Use a for-loop over the 1:K centroids.
+% Inside this loop, create a column vector of the distance from each training example 
+% to that centroid, and store it as a column of the distance matrix.
+% Steps to be followed:
+% First find the distance of X(m,:) with the first cluster.
+% We can also set minimum to some random higher value, like min_dist=inf or 10^6
+% Then compare this distance with the other k clusters and find the minimum one. 
+% For this, find all the distances between X(m,:) and rest of the clusters. 
+% If the distance found is lower compared to the minimum distance set,
+% then set the new minimum distance as this distance.
+% Assign the index of that training example m to that cluster with minimum distance
 
 for m = 1:length(X)
-    min_dist = sum((X(m,:)-centroids(1,:)).^2); % first find the distance 
-    % of X(m,:) with the first cluster
-    % Then compare this distance with the other k clusters 
-    % and find the minimum one. 
-    % We can also set minimum to some random higher value, like min_dist =
-    % inf or 10^6
+    min_dist = sum((X(m,:)-centroids(1,:)).^2); 
     for k = 1:K
-        dist = sum((X(m,:)-centroids(k,:)).^2); % find all the distances 
-        % between X(m,:) and rest of the clusters. 
-        % If the distance found is lower compared to the minimum distance set,
-        % then set the new minimum distance as this distance. 
+        dist = sum((X(m,:)-centroids(k,:)).^2); 
         if dist <= min_dist
             min_dist = dist;
             idx(m) = k;
@@ -41,4 +47,6 @@ for m = 1:length(X)
 end
 % =============================================================
 end
+
+
 
